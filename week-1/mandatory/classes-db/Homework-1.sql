@@ -95,7 +95,7 @@ SELECT * FROM students;
  id |     name      |                 address                 | graduated
 ----+---------------+-----------------------------------------+-----------
   1 | Juan De Sousa | Passeig de Fabra i Puig, 330. Barcelona | t
-  2 | Alejandro Gil | Carrer de Lucà. Barcelona               | f
+  2 | Alejandro Gil | Carrer de Luca. Barcelona               | f
 (2 filas)
 
 INSERT INTO students (name, address, graduated) VALUES ('Ainhoa Gonzalez', 'Carrer de la Diputacio, 336. Barcelona', 'true');
@@ -130,7 +130,7 @@ SELECT * FROM students;
   4 | Enrique Luque     | 8 Rue Garanciere, Paris. Francia         | t
 (10 filas)
 
-
+--7.- Crear clases
 
 
 
