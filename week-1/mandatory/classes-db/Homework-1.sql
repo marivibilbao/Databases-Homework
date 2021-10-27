@@ -152,6 +152,17 @@ cyf_classes(# );
 ═ndices:
     "classes_pkey" PRIMARY KEY, btree (id)
 
+--8.- Agregar información a la tabla de clases:
+INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Brendan Eich', 'JavaScript', '1955/04/05', 'Estados Unidos');
+
+INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Guido Van Rossum', 'Python', '1991/02/20', 'Paises Bajos');
+
+SELECT * FROM classes;
+ id |  leadingmentor   |   topic    |    date    |    location
+----+------------------+------------+------------+----------------
+  1 | Brendan Eich     | JavaScript | 1955-04-05 | Estados Unidos
+  2 | Guido Van Rossum | Python     | 1991-02-20 | Paises Bajos
+(2 filas)
 
 
 
