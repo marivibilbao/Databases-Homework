@@ -157,18 +157,17 @@ INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Brendan Eich
 
 INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Guido Van Rossum', 'Python', '1991/02/20', 'Paises Bajos');
 
+INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Diego Blau', 'JavaScript', '2021/10/29', 'Barcelona');
+
 SELECT * FROM classes;
  id |  leadingmentor   |   topic    |    date    |    location
 ----+------------------+------------+------------+----------------
   1 | Brendan Eich     | JavaScript | 1955-04-05 | Estados Unidos
   2 | Guido Van Rossum | Python     | 1991-02-20 | Paises Bajos
-(2 filas)
+  3 | Diego Blau       | JavaScript | 2021-10-29 | Barcelona
+(3 filas)
 
-
-
-
-
-
+--9.- 
 
 
 
