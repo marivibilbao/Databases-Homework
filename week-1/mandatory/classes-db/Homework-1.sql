@@ -130,7 +130,27 @@ SELECT * FROM students;
   4 | Enrique Luque     | 8 Rue Garanciere, Paris. Francia         | t
 (10 filas)
 
---7.- Crear clases
+--7.- Crear una nueva tabla llamada clases:
+CREATE TABLE classes(
+cyf_classes(# id SERIAL PRIMARY KEY,
+cyf_classes(# leadingmentor VARCHAR(50) NOT NULL,
+cyf_classes(# topic VARCHAR(120) NOT NULL,
+cyf_classes(# date DATE NOT NULL,
+cyf_classes(# location VARCHAR(30) NOT NULL
+cyf_classes(# );
+
+-- Comprobación de la creación:
+\d classes
+                                         Tabla ½public.classes╗
+    Columna    |          Tipo          | Ordenamiento | Nulable  |             Por omisi¾n
+---------------+------------------------+--------------+----------+-------------------------------------
+ id            | integer                |              | not null | nextval('classes_id_seq'::regclass)
+ leadingmentor | character varying(50)  |              | not null |
+ topic         | character varying(120) |              | not null |
+ date          | date                   |              | not null |
+ location      | character varying(30)  |              | not null |
+═ndices:
+    "classes_pkey" PRIMARY KEY, btree (id)
 
 
 
