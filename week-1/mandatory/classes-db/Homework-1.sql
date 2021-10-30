@@ -168,7 +168,32 @@ SELECT * FROM classes;
 (3 filas)
 
 --9.- Conexión entre las dos tablas (estudiantes y clases);
-ALTER TABLE students ADD COLUMN class foreign key(nombre_campo) references tabla (campo)
+--Dos formas de realizar el proceso:
+-- La primera:
+ALTER TABLE students ADD COLUMN class_id int;
+ALTER TABLE students add foreign key(class_id) references classes (id);
+
+-- La segunda:
+ALTER TABLE students ADD COLUMN class_id int constraint fk_class_id references classes (id);
+
+SELECT * FROM students
+cyf_classes-# ;
+ id |       name        |                 address                  | graduated | class_id
+----+-------------------+------------------------------------------+-----------+----------
+  1 | Juan De Sousa     | Passeig de Fabra i Puig, 330. Barcelona  | t         |
+  7 | Peter Pan         | 27 Rue Oudinot, Paris. Francia           | f         |
+  8 | Victoria Villegas | Calle Altamira, Caracas. Venezuela       | t         |
+ 10 | Carolina Elorza   | Carrer de Jaume I, Viladecans. Barcelona | t         |
+  5 | Jose Lopez        | Avenida San Juan, Caracas. Venezuela     | t         |
+  3 | Ainhoa Gonzalez   | Carrer de la Diputacio, 336. Barcelona   | t         |
+  2 | Alejandro Gil     | Carrer de Luca. Barcelona                | f         |
+  6 | Anna Burgos       | Via Favencia, Barcelona.                 | t         |
+  9 | Josefina Soria    | Carrer Gaudi, 4. Barcelona               | f         |
+  4 | Enrique Luque     | 8 Rue Garanciere, Paris. Francia         | t         |
+(10 filas)
+
+-- Añadir información dentro la columna añadida:
+
 
 
 
@@ -202,6 +227,14 @@ SELECT * FROM students WHERE graduated = 'true';
   6 | Anna Burgos       | Via Favencia, Barcelona.                 | t
   4 | Enrique Luque     | 8 Rue Garanciere, Paris. Francia         | t
 (7 filas)
+
+
+SELECT * FROM classes WHERE date < '2021-06-01';
+ id |  leadingmentor   |   topic    |    date    |    location
+----+------------------+------------+------------+----------------
+  1 | Brendan Eich     | JavaScript | 2021-04-05 | Estados Unidos
+  2 | Guido Van Rossum | Python     | 2020-02-20 | Paises Bajos
+(2 filas)
 
 
 
