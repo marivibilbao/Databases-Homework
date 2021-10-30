@@ -153,21 +153,59 @@ cyf_classes(# );
     "classes_pkey" PRIMARY KEY, btree (id)
 
 --8.- Agregar información a la tabla de clases:
-INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Brendan Eich', 'JavaScript', '1955/04/05', 'Estados Unidos');
+INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Brendan Eich', 'JavaScript', '2021-04-05', 'Estados Unidos');
 
-INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Guido Van Rossum', 'Python', '1991/02/20', 'Paises Bajos');
+INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Guido Van Rossum', 'Python', '2020-02-20', 'Paises Bajos');
 
 INSERT INTO classes (leadingmentor, topic, date, location) VALUES ('Diego Blau', 'JavaScript', '2021/10/29', 'Barcelona');
 
 SELECT * FROM classes;
  id |  leadingmentor   |   topic    |    date    |    location
 ----+------------------+------------+------------+----------------
-  1 | Brendan Eich     | JavaScript | 1955-04-05 | Estados Unidos
-  2 | Guido Van Rossum | Python     | 1991-02-20 | Paises Bajos
+  1 | Brendan Eich     | JavaScript | 2021-04-05 | Estados Unidos
+  2 | Guido Van Rossum | Python     | 2020-02-20 | Paises Bajos
   3 | Diego Blau       | JavaScript | 2021-10-29 | Barcelona
 (3 filas)
 
---9.- 
+--9.- Conexión entre las dos tablas (estudiantes y clases);
+ALTER TABLE students ADD COLUMN class foreign key(nombre_campo) references tabla (campo)
+
+
+
+-- 10.- Realizamos búsquedas:
+SELECT * FROM mentors WHERE yearsinglasgow > 5;
+ id |     name      | yearsinglasgow |                     address                     |   favprogramlanguage
+----+---------------+----------------+-------------------------------------------------+-------------------------
+  5 | Wendy Andrade |             12 | 135 Cortmalaw Cres, Glasgow G33 1TD, Regne Unit | JavaScript
+  6 | Pedro Bilbao  |             60 | 119 Cortmalaw Cres, Glasgow G33 1TD, Regne Unit | JavaScript, PHP, Python
+  3 | Jesus Cepeda  |             20 | 39 Dalmally St, Glasgow G20 6RY, Reino Unido    | PHP
+(3 filas)
+
+
+SELECT * FROM mentors WHERE favprogramlanguage = 'JavaScript';
+ id |         name          | yearsinglasgow |                     address                     | favprogramlanguage
+----+-----------------------+----------------+-------------------------------------------------+--------------------
+  5 | Wendy Andrade         |             12 | 135 Cortmalaw Cres, Glasgow G33 1TD, Regne Unit | JavaScript
+  2 | Nancy Gonzalez        |              1 | Av. Romulo Gallegos, Caracas. Venezuela         | JavaScript
+  1 | Maria Victoria Bilbao |              0 | Barcelona                                       | JavaScript
+(3 filas)
+
+
+SELECT * FROM students WHERE graduated = 'true';
+ id |       name        |                 address                  | graduated
+----+-------------------+------------------------------------------+-----------
+  1 | Juan De Sousa     | Passeig de Fabra i Puig, 330. Barcelona  | t
+  8 | Victoria Villegas | Calle Altamira, Caracas. Venezuela       | t
+ 10 | Carolina Elorza   | Carrer de Jaume I, Viladecans. Barcelona | t
+  5 | Jose Lopez        | Avenida San Juan, Caracas. Venezuela     | t
+  3 | Ainhoa Gonzalez   | Carrer de la Diputacio, 336. Barcelona   | t
+  6 | Anna Burgos       | Via Favencia, Barcelona.                 | t
+  4 | Enrique Luque     | 8 Rue Garanciere, Paris. Francia         | t
+(7 filas)
+
+
+
+
 
 
 
