@@ -61,12 +61,66 @@ SELECT * FROM products ORDER BY unit_price DESC LIMIT 5;
 
 
 6. Retrieve all the products with their corresponding suppliers. The result should only contain the columns `product_name`, `unit_price` and `supplier_name`
+SELECT product_name, unit_price, supplier_name FROM products
+LEFT JOIN suppliers ON supplier_id=products.supplier_id; 
+ product_name       | unit_price | supplier_name
+-------------------------+------------+---------------
+ Tee Shirt Olympic Games |         20 | Amazon
+ Tee Shirt Olympic Games |         20 | Taobao
+ Tee Shirt Olympic Games |         20 | Argos
+ Tee Shirt Olympic Games |         20 | Sainsburys
+ Tee Shirt Olympic Games |         18 | Amazon
+ Tee Shirt Olympic Games |         18 | Taobao
+ Tee Shirt Olympic Games |         18 | Argos
+ Tee Shirt Olympic Games |         18 | Sainsburys
+ Tee Shirt Olympic Games |         21 | Amazon
+ Tee Shirt Olympic Games |         21 | Taobao
+ Tee Shirt Olympic Games |         21 | Argos
+ Tee Shirt Olympic Games |         21 | Sainsburys
+ Mobile Phone X          |        299 | Amazon
+ Mobile Phone X          |        299 | Taobao
+ Mobile Phone X          |        299 | Argos
+ Mobile Phone X          |        299 | Sainsburys
+ Mobile Phone X          |        249 | Amazon
+ Mobile Phone X          |        249 | Taobao
+ Mobile Phone X          |        249 | Argos
+ Mobile Phone X          |        249 | Sainsburys
+ Super warm socks        |         10 | Amazon
+ Super warm socks        |         10 | Taobao
+ Super warm socks        |         10 | Argos
+ Super warm socks        |         10 | Sainsburys
+ Super warm socks        |          5 | Amazon
+ Super warm socks        |          5 | Taobao
+ Super warm socks        |          5 | Argos
+-- Más  --
 
 
 7. Retrieve all the products sold by suppliers based in the United Kingdom. The result should only contain the columns `product_name` and `supplier_name`.
+SELECT product_name, supplier_name FROM products 
+JOIN suppliers ON suppliers.id= products.supplier_id  
+WHERE suppliers.country = 'United Kingdom'; 
+ product_name       | supplier_name
+-------------------------+---------------
+ Tee Shirt Olympic Games | Argos
+ Mobile Phone X          | Sainsburys
+ Super warm socks        | Argos
+ Super warm socks        | Sainsburys
+ Le Petit Prince         | Sainsburys
+ Ball                    | Sainsburys
+ Javascript Book         | Argos
+ Coffee Cup              | Argos
+ Coffee Cup              | Sainsburys
+(9 filas)
 
 
 8. Retrieve all orders from customer ID `1`
+SELECT * FROM orders WHERE customer_id = 1;
+ id | order_date | order_reference | customer_id
+----+------------+-----------------+-------------
+  1 | 2019-06-01 | ORD001          |           1
+  2 | 2019-07-15 | ORD002          |           1
+  3 | 2019-07-11 | ORD003          |           1
+(3 filas)
 
 
 9. Retrieve all orders from customer named `Hope Crosby`
