@@ -22,23 +22,45 @@ To prepare your environment for this homework, open a terminal and create a new 
 ```sql
 createdb cyf_ecommerce
 ```
+<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+<!-- Se crea la base de datos: -->
+CREATE DATABASE cyf_ecommerce;
+<!-- ------------------------------------------------------------------------------------------------------------------------- -->
 
 Import the file [`cyf_ecommerce.sql`](./cyf_ecommerce.sql) in your newly created database:
 
 ```sql
 psql -d cyf_ecommerce -f cyf_ecommerce.sql
 ```
+<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+<!-- Se ejecuta el siguiente comando: -->
+psql -U postgres -d cyf_ecommerce -f cyf_ecommerce.sql
+psql -U postgres cyf_ecommerce
+<!-- ------------------------------------------------------------------------------------------------------------------------- -->
 
 Open the file `cyf_ecommerce.sql` in VSCode and make sure you understand all the SQL code. Take a piece of paper and draw the database with the different relations between tables. Identify the foreign keys and make sure you understand the full database schema.
 
 ## Task
 
 Once you understand the database that you are going to work with, solve the following challenge by writing SQL queries using everything you learned about SQL:
-
+<!-- ------------------------------------------------------------------------------------------------------------------------- -->
 1. Retrieve all the customers names and addresses who lives in United States
+SELECT name, address from customers WHERE country = 'United States';
+     name     |          address
+--------------+----------------------------
+ Amber Tran   | 6967 Ac Road
+ Edan Higgins | Ap #840-3255 Tincidunt St.
+(2 filas)
+
+
 2. Retrieve all the customers ordered by ascending name
+
+
+
 3. Retrieve all the products which cost more than 100
+
 4. Retrieve all the products whose name contains the word `socks`
+
 5. Retrieve the 5 most expensive products
 6. Retrieve all the products with their corresponding suppliers. The result should only contain the columns `product_name`, `unit_price` and `supplier_name`
 7. Retrieve all the products sold by suppliers based in the United Kingdom. The result should only contain the columns `product_name` and `supplier_name`.
@@ -47,3 +69,4 @@ Once you understand the database that you are going to work with, solve the foll
 10. Retrieve all the products in the order `ORD006`. The result should only contain the columns `product_name`, `unit_price` and `quantity`.
 11. Retrieve all the products with their supplier for all orders of all customers. The result should only contain the columns `name` (from customer), `order_reference` `order_date`, `product_name`, `supplier_name` and `quantity`.
 12. Retrieve the names of all customers who bought a product from a supplier from China.
+<!-- ------------------------------------------------------------------------------------------------------------------------- -->
