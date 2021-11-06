@@ -124,15 +124,71 @@ SELECT * FROM orders WHERE customer_id = 1;
 
 
 9. Retrieve all orders from customer named `Hope Crosby`
+SELECT * FROM orders o JOIN customers c ON o.customer_id = c.id 
+WHERE c.name = 'Hope Crosby';
+id | order_date | order_reference | customer_id | id |    name     |          address           | city  |    country
+----+------------+-----------------+-------------+----+-------------+----------------------------+-------+----------------
+  4 | 2019-05-24 | ORD004          |           2 |  2 | Hope Crosby | P.O. Box 276, 4976 Sit Rd. | Steyr | United Kingdom
+(1 fila)
 
 
 10. Retrieve all the products in the order `ORD006`. The result should only contain the columns `product_name`, `unit_price` and `quantity`.
+SELECT p.product_name, p.unit_price, oi.quantity FROM orders o  
+JOIN order_items oi ON oi.order_id = o.id 
+JOIN products p ON oi.product_id =p.id
+WHERE o.order_reference = 'ORD006';
+product_name   | unit_price | quantity
+------------------+------------+----------
+ Coffee Cup       |          4 |        3
+ Javascript Book  |         41 |        1
+ Le Petit Prince  |         10 |        1
+ Super warm socks |         10 |        3
+(4 filas)
 
 
 11. Retrieve all the products with their supplier for all orders of all customers. The result should only contain the columns `name` (from customer), `order_reference` `order_date`, `product_name`, `supplier_name` and `quantity`.
+SELECT NAME, order_reference, order_date, product_name, supplier_name, quantity FROM customers AS cus
+JOIN orders AS o ON o.customer_id = cus.id 
+JOIN order_items AS oi ON oi.order_id = o.id 
+JOIN products AS pro ON pro.id = oi.product_id 
+JOIN suppliers AS s ON s.id = pro.supplier_id ;
+ name        | order_reference | order_date |      product_name       | supplier_name | quantity
+--------------------+-----------------+------------+-------------------------+---------------+----------
+ Guy Crawford       | ORD001          | 2019-06-01 | Tee Shirt Olympic Games | Taobao        |        1
+ Guy Crawford       | ORD001          | 2019-06-01 | Super warm socks        | Taobao        |        5
+ Guy Crawford       | ORD002          | 2019-07-15 | Super warm socks        | Argos         |        4
+ Guy Crawford       | ORD002          | 2019-07-15 | Le Petit Prince         | Sainsburys    |        1
+ Guy Crawford       | ORD003          | 2019-07-11 | Coffee Cup              | Argos         |       10
+ Guy Crawford       | ORD003          | 2019-07-11 | Ball                    | Taobao        |        2
+ Hope Crosby        | ORD004          | 2019-05-24 | Mobile Phone X          | Amazon        |        1
+ Britanney Kirkland | ORD005          | 2019-05-30 | Javascript Book         | Argos         |        2
+ Britanney Kirkland | ORD005          | 2019-05-30 | Le Petit Prince         | Amazon        |        1
+ Amber Tran         | ORD006          | 2019-07-05 | Coffee Cup              | Taobao        |        3
+ Amber Tran         | ORD006          | 2019-07-05 | Javascript Book         | Taobao        |        1
+ Amber Tran         | ORD006          | 2019-07-05 | Le Petit Prince         | Sainsburys    |        1
+ Amber Tran         | ORD006          | 2019-07-05 | Super warm socks        | Sainsburys    |        3
+ Amber Tran         | ORD007          | 2019-04-05 | Super warm socks        | Argos         |       15
+ Edan Higgins       | ORD008          | 2019-07-23 | Tee Shirt Olympic Games | Amazon        |        1
+ Edan Higgins       | ORD008          | 2019-07-23 | Mobile Phone X          | Sainsburys    |        1
+ Edan Higgins       | ORD009          | 2019-07-24 | Ball                    | Sainsburys    |        2
+ Edan Higgins       | ORD010          | 2019-05-10 | Ball                    | Taobao        |        1
+ Edan Higgins       | ORD010          | 2019-05-10 | Super warm socks        | Amazon        |        5
+(19 filas)
 
 
 12. Retrieve the names of all customers who bought a product from a supplier from China.
+SELECT NAME, suppliers.country FROM customers
+CROSS JOIN suppliers 
+WHERE suppliers.country ='China';
+ name        | country
+--------------------+---------
+ Guy Crawford       | China
+ Hope Crosby        | China
+ Britanney Kirkland | China
+ Amber Tran         | China
+ Edan Higgins       | China
+ Quintessa Austin   | China
+(6 filas)
 
 
 
