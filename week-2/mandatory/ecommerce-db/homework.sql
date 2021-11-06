@@ -7,7 +7,6 @@ psql -U postgres -d cyf_ecommerce -f cyf_ecommerce.sql
 psql -U postgres cyf_ecommerce
 
 1. Retrieve all the customers names and addresses who lives in United States
-
 SELECT name, address FROM customers WHERE country = 'United States';
      name     |          address
 --------------+----------------------------
@@ -17,7 +16,6 @@ SELECT name, address FROM customers WHERE country = 'United States';
 
 
 2. Retrieve all the customers ordered by ascending name
-
 SELECT * FROM customers order by name;
  id |        name        |           address           |       city       |    country  
 ----+--------------------+-----------------------------+------------------+----------------
@@ -31,7 +29,6 @@ SELECT * FROM customers order by name;
 
 
 3. Retrieve all the products which cost more than 100
-
 SELECT * FROM products WHERE unit_price > 100;
  id |  product_name  | unit_price | supplier_id
 ----+----------------+------------+-------------
@@ -41,12 +38,26 @@ SELECT * FROM products WHERE unit_price > 100;
 
 
 4. Retrieve all the products whose name contains the word `socks`
-
-
-
+SELECT * FROM products WHERE product_name LIKE '%socks%';
+ id |   product_name   | unit_price | supplier_id
+----+------------------+------------+-------------
+  6 | Super warm socks |         10 |           1
+  7 | Super warm socks |          5 |           2
+  8 | Super warm socks |          8 |           3
+  9 | Super warm socks |         10 |           4
+(4 filas)
 
 
 5. Retrieve the 5 most expensive products
+SELECT * FROM products ORDER BY unit_price DESC LIMIT 5;
+ id |  product_name   | unit_price | supplier_id
+----+-----------------+------------+-------------
+  4 | Mobile Phone X  |        299 |           1
+  5 | Mobile Phone X  |        249 |           4
+ 17 | Javascript Book |         41 |           2
+ 15 | Javascript Book |         40 |           1
+ 16 | Javascript Book |         39 |           3
+(5 filas)
 
 
 6. Retrieve all the products with their corresponding suppliers. The result should only contain the columns `product_name`, `unit_price` and `supplier_name`
