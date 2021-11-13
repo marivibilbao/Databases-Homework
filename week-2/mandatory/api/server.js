@@ -113,7 +113,7 @@ app.delete('/orders/:orderId', function (req, res) {
   let order_id = parseInt(req.params.orderId)
   const deleteOrder = `DELETE FROM orders WHERE id = $1 RETURNING *`;
   const deleteOrderItems = `DELETE FROM order_items WHERE order_id = $1 RETURNING *`;
-  
+
   pool.connect((err, client, release) => {
       if (err) {
           res.send('Error acquiring client')
@@ -137,9 +137,8 @@ app.delete('/orders/:orderId', function (req, res) {
 //-- Week 3: DELETE --- /customers/:customerId
 app.delete('/customers/:customerId', async (req, res) => {
   const customerId = parseInt(req.params.customerId)
-  const deleteOrder = `DELETE FROM orders WHERE id = $1 RETURNING *`;
   const selectCustomerOrders = 'SELECT * FROM orders WHERE customer_id = $1';
-  const deleteCUstomer = `DELETE FROM customers WHERE id = $1 RETURNING *`;
+  const deleteCustomer = `DELETE FROM customers WHERE id = $1 RETURNING *`;
 
   pool.connect((err, client, release) => {
       if (err) {
