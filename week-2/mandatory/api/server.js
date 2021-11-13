@@ -31,6 +31,12 @@ app.get("/suppliers", function (req, res) {
   });
 });
 
+app.get("/orders", function (req, res) {
+  pool.query("SELECT * FROM orders", (error, result) => {
+    res.status(200).json(result.rows);
+  });
+});
+
 //-- Week 3 GET --- /products
 app.get("/products", function (req, res) {
   pool.query(
@@ -76,26 +82,89 @@ pool
   });
 });
 
-///REVISAR
 //-- Week 3: PUT --- /customers/:customerId (name, address, city and country).
-app.put("/customers/:customerId", function (req, res) {
-  const customerId = req.params.customerId;
-  const newName = req.body.name;
-  const newAddress = req.body.address;
-  const newCity = req.body.city;
-  const newCountry = req.body.country;
+app.put('/customers/:customerId', function (req, res) {
+  let customer_id = parseInt(req.params.customerId)
+  let { name, address, city, country } = req.body
+  let values = [name, address, city, country, customer_id]
+  const selectedCustomer = `SELECT name FROM customers WHERE name = $1`;
+  const updateCustomer = `UPDATE customers SET name = $1, address = $2, city = $3, country = $4 WHERE id = $5`;
 
-  pool
-    .query("PUT customers SET name=$1, address=$2, city=$3, country=$4 WHERE id=$5", [newName, newAddress, newCity, newCountry, customerId])
-    .then(() => res.send(`Customer ${customerId} updated!`))
-    .catch((e) => console.error(e));
+  pool.connect((err, client, release) => {
+      if (err) {
+          res.send('Error acquiring client')
+      }
+      client.query(selectCustomerById, [customer_id], (err, result) => {
+          if (err) {
+              res.send('Error excecuting query')
+          } 
+          if (result.rowCount < 1) {
+              res.send('The customer with this id does not exist')
+          }
+          client.query(updateCustomer, values, (err, result) => {
+              res.status(201).send('The customer was updated')
+          });
+      });
+  });
 });
 
+//-- Week 3: DELETE --- /orders/:orderId 
+app.delete('/orders/:orderId', function (req, res) {
+  let order_id = parseInt(req.params.orderId)
+  const deleteOrder = `DELETE FROM orders WHERE id = $1 RETURNING *`;
+  const deleteOrderItems = `DELETE FROM order_items WHERE order_id = $1 RETURNING *`;
+  
+  pool.connect((err, client, release) => {
+      if (err) {
+          res.send('Error acquiring client')
+      }
+      client.query(deleteOrderItems, [order_id], (err, result) => {
+          if (err) {
+              res.send('Error excecuting query')
+          }
+          if (result.rowCount > 0) {
+              client.query(deleteOrder, [order_id], (err, result) => {
+                  release;
+                  if (result.rowCount > 0) {
+                      res.status(201).send(`Deleted lines:${result.rowCount}.`)
+                  }
+              });
+          };
+      });
+  });
+});
 
+//-- Week 3: DELETE --- /customers/:customerId
+app.delete('/customers/:customerId', async (req, res) => {
+  const customerId = parseInt(req.params.customerId)
+  const deleteOrder = `DELETE FROM orders WHERE id = $1 RETURNING *`;
+  const selectCustomerOrders = 'SELECT * FROM orders WHERE customer_id = $1';
+  const deleteCUstomer = `DELETE FROM customers WHERE id = $1 RETURNING *`;
 
-
-
-
+  pool.connect((err, client, release) => {
+      if (err) {
+          res.send('Error acquiring client')
+      }
+      if (customerId > 0) {
+          client.query(selectCustomerOrders, [customerId], (err, result) => {
+              if (result.rowCount === 0) {
+                  client.query(deleteCustomer, [customerId], (err, result) => {
+                      release;
+                      if (err) {
+                          res.send('Error excecuting query')
+                      };
+                      if (result.rowCount > 0) {
+                          res.status(200)
+                              .send(`${result.rowCount} customer was deleted`)
+                      };
+                  });
+              } else {
+                  return res.send('Not possible to delete the customer.This customer has already orders')
+              };
+          });
+      };
+  });
+});
 
 
 const port = 3000;
